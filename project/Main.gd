@@ -100,6 +100,50 @@ var _spells := [
 	["Combat Awareness", "Wizard Eye", "Suggestion", "Reveal Secret"],
 	["Circle of Protection", "Heal", "Dispel", "Destroy Undead"],
 ]
+var _dark_alchemy_treasure_table := [
+	[{"type":"coins", "qty":15}],
+	[{"type":"coins", "qty":20}],
+	[{"type":"coins", "qty":25}],
+	[{"type":"coins", "qty":30}],
+	[{"type":"coins", "qty":40}],
+	[{"type":"coins", "qty":15}, {"type":"potion", "qty":1}],
+	[{"type":"coins", "qty":25}, {"type":"potion", "qty":1}],
+	[{"type":"coins", "qty":35}, {"type":"potion", "qty":1}],
+	[{"type":"coins", "qty":10}, {"type":"scroll", "qty":1}],
+	[{"type":"coins", "qty":20}, {"type":"scroll", "qty":1}],
+	[{"type":"coins", "qty":30}, {"type":"scroll", "qty":1}],
+	[{"type":"coins", "qty":10}, {"type":"potion", "qty":2}],
+	[{"type":"coins", "qty":20}, {"type":"potion", "qty":2}],
+	[{"type":"coins", "qty":30}, {"type":"potion", "qty":2}],
+	[{"type":"potion", "qty":3}],
+	[{"type":"weapon", "qty":1}],
+	[{"type":"item", "qty":1}],
+	[{"type":"grimoire", "qty":1}],
+	[{"type":"grimoire", "qty":1}],
+	[{"type":"grimoire", "qty":1}],
+]
+var _lich_lord_treasure := [
+	"Book of Bones: Only a wizard may use book to summon a skeleton instead of a zombie when casting Raise Zombie. If cast out-of-game, you can spend 30gc to upgrade it to and armored skeleton. cost: 300gc",
+	"Book of the Rangifer: If a warband has this book, they may hire a rangifer for 100gc. The rangifer leaves the warband if any Undead are present before or after a game. cost: 300gc",
+	"Boots of Leaping: These boots allow the wearer to make one movement action a turn where they take no penalties from rough terrain or climbing. cost: 250gc",
+	"Club of Battering: A two-handed weapon that gives the weilder +1 fight in hand-to-hand combat. When the weilder of this weapon wins a combat, they can push their opponent back up to 3 inches. cost: 300gc",
+	"Crystal Rose: A figure that is carrying a Crystal Rose may reroll their survival roll after a game, but they must keep the second result. cost: 400gc",
+	"Eyes of Amoto: This is a set of two amulets. One is worn by a spellcaster, one by a soldier. Once per game, the spellcaster may trace line-of-sight from the soldier instead. cost: 300gc",
+	"Grimoire of Homunculus",
+	"Grimoire of Lichdom",
+	"Grimoire of Revenant",
+	"Horn of Hellfire: Once per game, the weilder of this horn may make a +5 magic shooting attack at a target within 24 inches and line-of-sight. cost: 400gc",
+	"Ivory Scroll",
+	"Magic Spectacles: The wearer of these spectacles can see invisible things. If the wearer rolls Lost Eye, the spectacles are destroyed. cost: 250gc",
+	"Quiver of the Soul Seeker: This quiver makes any bow or crossbow attacks by its weilder count as magic attacks. cost: 300gc",
+	"Ring of Life: +1 fight and +1 armor versus Undead. When fighting Undead, attacks count as magic attacks. cost: 400gc",
+	"Scarf of Obscurance: +1 fight against shooting attacks. cost: 350gc",
+	"Sword of Undead Slaying: +3 fight against Undead. Otherwise it grants no bonus but counts as a magic weapon. cost: 300gc",
+	"Unbreakable Orb: Once per game, the carrier of the Orb may activate it. When activated, the carrier may not do anything, but cannot be in combat or take damage. cost: 300gc",
+	"Vampire Blade: When this sword deals damage to a living target, the weilder gets 2 health. The sword is magic but gives no bonus. cost: 300gc",
+	"Vial of Starlight (10): Charges may be expended from this item to empower Thamaturge spells, even out-of-game. When empty, this item is worthless. cost: 600gc",
+	"Wraithbottle: The carrier of this potion may spend an action to throw the bottle and create a Wraith at any point within line-of-sight and 10 inches. cost: 200gc",
+]
 var _base_game_treasure_table := [
 	[{"type":"coins", "qty":50}],
 	[{"type":"rand10", "qty":1}],
@@ -126,14 +170,20 @@ var _table = Table.BASE
 
 func _ready():
 	randomize()
-	$ItemList.select(1)
+	$ItemList.select(0)
 
 func _on_Button_pressed():
 	var you_found := ""
-	if _table == Table.BASE:
-		var treasure_table := _base_game_treasure_table
-		var treasure_index := d(20)
-		var treasure = treasure_table[treasure_index]
+	var treasure := []
+	if _table != Table.LICH:
+		if _table == Table.BASE:
+			var treasure_table := _base_game_treasure_table
+			var treasure_index := d(20)
+			treasure = treasure_table[treasure_index]
+		elif _table == Table.ALCHEMY:
+			var treasure_table := _dark_alchemy_treasure_table
+			var treasure_index := d(20)
+			treasure = treasure_table[treasure_index]
 		for item in treasure:
 			var value := ""
 			if item["type"] == "coins":
@@ -169,6 +219,12 @@ func _on_Button_pressed():
 					elif item["type"] == "grimoire":
 						var spell := _generate_spell()
 						you_found += "Grimoire of "+spell+" "
+	elif _table == Table.LICH:
+		var item:String = _lich_lord_treasure[d(20)]
+		if item != "Ivory Scroll":
+			you_found = item
+		else:
+			you_found = "Ivory Scroll of "+_generate_spell()+": The Ivory Scroll may be used once per game. When used, roll a die. On a 19-20, the scroll is destroyed. sell: 200"
 	$Label.text = you_found
 
 func splice(item:Dictionary)->String:
@@ -195,3 +251,11 @@ func _generate_spell()->String:
 
 func d(sides:int)->int:
 	return randi()%sides
+
+func _on_ItemList_item_selected(index):
+	if index == 0:
+		_table = Table.BASE
+	elif index == 1:
+		_table = Table.LICH
+	elif index == 2:
+		_table = Table.ALCHEMY

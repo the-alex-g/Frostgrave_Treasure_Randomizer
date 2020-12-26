@@ -42,6 +42,10 @@ anchor_right = 0.5
 margin_left = -83.0
 margin_right = 83.0
 margin_bottom = 60.0
-items = [ "Thaw of the Lich Lord", null, false, "Base Game", null, false, "Alchemy", null, false ]
+items = [ "Base Game", null, false, "Thaw of the Lich Lord", null, false, "Dark Alchemy", null, false ]
 auto_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="item_selected" from="ItemList" to="." method="_on_ItemList_item_selected"]
