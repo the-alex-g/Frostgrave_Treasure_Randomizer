@@ -124,6 +124,9 @@ var _base_game_treasure_table := [
 ]
 var _table = Table.BASE
 
+func _ready():
+	randomize()
+	$ItemList.select(1)
 
 func _on_Button_pressed():
 	var you_found := ""
