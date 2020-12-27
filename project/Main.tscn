@@ -10,7 +10,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
+[node name="Results" type="Label" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,24 +22,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -35.5
-margin_top = -10.0
-margin_right = 35.5
-margin_bottom = 10.0
-text = "Generate"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ItemList" type="ItemList" parent="."]
+[node name="TreasureTables" type="ItemList" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -83.0
+margin_top = 40.0
 margin_right = 83.0
 margin_bottom = 60.0
 items = [ "Base Game", null, false, "Thaw of the Lich Lord", null, false, "Dark Alchemy", null, false ]
@@ -47,5 +34,79 @@ auto_height = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
-[connection signal="item_selected" from="ItemList" to="." method="_on_ItemList_item_selected"]
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -66.0
+margin_top = -22.0
+margin_right = 66.0
+margin_bottom = 22.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Monster" type="Button" parent="Buttons"]
+margin_right = 132.0
+margin_bottom = 20.0
+text = "Random Encounter"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Treasure" type="Button" parent="Buttons"]
+margin_top = 24.0
+margin_right = 132.0
+margin_bottom = 44.0
+text = "Random Treasure"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -46.5
+margin_top = 10.0
+margin_right = 46.5
+margin_bottom = 14.0
+text = "Treasure Table"
+
+[node name="Elabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -51.0
+margin_top = -180.0
+margin_right = 51.0
+margin_bottom = -180.0
+text = "Encounter Table"
+
+[node name="EncouterTables" type="ItemList" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -75.5
+margin_top = -150.0
+margin_right = 75.5
+margin_bottom = -85.0
+items = [ "Base Game", null, false, "Thaw of the Lich Lord", null, false, "Alex's Compilation", null, false ]
+
+[node name="EncounterStrength" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -69.0
+margin_top = 150.0
+margin_right = 69.0
+margin_bottom = 11.5
+align = 1
+[connection signal="item_selected" from="TreasureTables" to="." method="_on_ItemList_item_selected"]
+[connection signal="pressed" from="Buttons/Monster" to="." method="_on_Monster_pressed"]
+[connection signal="pressed" from="Buttons/Treasure" to="." method="_on_TreasureButton_pressed"]
+[connection signal="item_selected" from="EncouterTables" to="." method="_on_EncouterTables_item_selected"]

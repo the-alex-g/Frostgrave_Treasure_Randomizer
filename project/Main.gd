@@ -1,6 +1,7 @@
 extends Control
 
-enum Table {BASE, LICH, ALCHEMY}
+enum TTable {BASE, LICH, ALCHEMY}
+enum ETable {BASE, LICH, COMP}
 var _lesser_potions := [
 	{"name":"Potion of Healing", "effect":"+5 health", "cost":"75", "sell":"50"},
 	{"name":"Potion of Strength", "effect":"+1 fight", "cost":"100", "sell":"40"},
@@ -166,21 +167,75 @@ var _base_game_treasure_table := [
 	[{"type":"coins", "qty":100}, {"type":"grimoire", "qty":1}],
 	[{"type":"coins", "qty":120}, {"type":"grimoire", "qty":1}],
 ]
-var _table = Table.BASE
+var _monsters := {
+	"Nullman":{"M":"6", "F":"+1", "S":"+0", "A":"12", "W":"+10", "H":"5", "notes":"Immune to magic, moves toward closest spellcaster within 18 inches instead of random movement"},
+	"Fire-Flinger":{"M":"5", "F":"+1", "S":"+3", "A":"12", "W":"+0", "H":"12", "notes":"Construct, if it wins combat it will push back and be done, if is within 6 inches of a warband member it will make a +3 magic elemental shooting attack, it will move into shooting range instead of melee combat"},
+	"Burning Skeleton":{"M":"6", "F":"+1", "S":"+0", "A":"10", "W":"+1", "H":"1", "notes":"Undead, if it wins combat the opponent takes 2 damage"},
+	"Foulhorn":{"M":"7", "F":"+4", "S":"+0", "A":"12", "W":"+5", "H":"12", "notes":"If this creature moves then attacks in the same activation, it gets +2 fight for that attack"},
+	"Starfire Elemental":{"M":"5", "F":"+7", "S":"+0", "A":"6", "W":"+5", "H":"1", "notes":"Levitate, See through terrain, Immune to normal weapons, Destroyed if it inflicts damage, Immune to Invisibility, Mind Control, Possess, and Beauty"},
+	"Banshee":{"M":"9", "F":"+0", "S":"+0", "A":"10", "W":"+5", "H":"10", "notes":"Undead, Immaterial, Immune to non-magic, On its turn Banshee will make a random move, and then all non-undead or constructs within 6 inches must make a will roll of 10 or take damage by the amount they failed"},
+	"Death Cultist":{"M":"6", "F":"+0", "S":"+0", "A":"10", "W":"+5", "H":"10", "notes":""},
+	"Frost Wraith":{"M":"6", "F":"+2", "S":"+0", "A":"10", "W":"+3", "H":"6", "notes":"Undead, +2 fight against Living creatures"},
+	"The Ghoul King":{"M":"8", "F":"+4", "S":"+0", "A":"12", "W":"+6", "H":"14", "notes":"Undead, Immune to Control, +2 damage"},
+	"Rangifer":{"M":"7", "F":"+2", "S":"+0", "A":"12", "W":"+3", "H":"12", "notes":"+1 fight and attacks count as Magical against Undead"},
+	"Spectre":{"M":"9", "F":"+0", "S":"+0", "A":"10", "W":"+10", "H":"8", "notes":"Undead, Immaterial, Immune to non-magic"},
+	"Wraith Knight":{"M":"6", "F":"+3", "S":"+0", "A":"10", "W":"+5", "H":"10", "notes":"Undead, Immaterial, Immune to Control, Immune to non-magic, x2 damage"},
+	"Zombie Troll":{"M":"4", "F":"+4", "S":"+0", "A":"14", "W":"+2", "H":"10", "notes":"Undead, Large, +2 damage"},
+	"Bear":{"M":"6", "F":"+4", "S":"+0", "A":"12", "W":"+0", "H":"14", "notes":"Animal, Large, +2 damage"},
+	"Boar":{"M":"6", "F":"+2", "S":"+0", "A":"12", "W":"+2", "H":"8", "notes":"Animal, Bounty(10gc), If this creature moves then attacks in the same activation, it gets +2 fight for that attack"},
+	"Giant Rat":{"M":"6", "F":"+0", "S":"+0", "A":"6", "W":"+0", "H":"1", "notes":"Animal, Pack Hunter"},
+	"Ice Spider":{"M":"6", "F":"+1", "S":"+0", "A":"8", "W":"+0", "H":"4", "notes":"Animal, Expert Climber"},
+	"Ice Toad":{"M":"4", "F":"+2", "S":"+0", "A":"10", "W":"+0", "H":"5", "notes":"Takes no penalties from being in water, Animal, x2 damage"},
+	"Snow Leopard":{"M":"8", "F":"+3", "S":"+0", "A":"10", "W":"+2", "H":"10", "notes":"Animal, Expert Climber"},
+	"White Gorilla":{"M":"6", "F":"+4", "S":"+0", "A":"12", "W":"+8", "H":"14", "notes":"Animal, +2 damage"},
+	"Wild Dog":{"M":"8", "F":"+0", "S":"+0", "A":"8", "W":"+0", "H":"4", "notes":"Animal, Pack Hunter"},
+	"Wolf":{"M":"8", "F":"+1", "S":"+0", "A":"10", "W":"+0", "H":"6", "notes":"Animal, Pack Hunter"},
+	"Small Construct":{"M":"6", "F":"+1", "S":"+0", "A":"11", "W":"+0", "H":"10", "notes":"Construct"},
+	"Medium Construct":{"M":"5", "F":"+3", "S":"+0", "A":"12", "W":"+0", "H":"12", "notes":"Construct"},
+	"Large Construct":{"M":"4", "F":"+4", "S":"+0", "A":"13", "W":"+0", "H":"14", "notes":"Construct, Large, +2 damage"},
+	"Imp":{"M":"6", "F":"+1", "S":"+0", "A":"10", "W":"+4", "H":"6", "notes":"Demon"},
+	"Minor Demon":{"M":"6", "F":"+3", "S":"+0", "A":"11", "W":"+4", "H":"12", "notes":"Demon"},
+	"Major Demon":{"M":"6", "F":"+5", "S":"+0", "A":"12", "W":"+6", "H":"15", "notes":"Demon, Large, +2 damage, Immune to Invisibility, Beauty, destroys Illusionary Soldiers on contact"},
+	"Frost Giant":{"M":"6", "F":"+5", "S":"+0", "A":"15", "W":"+4", "H":"25", "notes":"Takes 2 less elemental damage, Large, +2 damage"},
+	"Worm":{"M":"7", "F":"+4", "S":"+0", "A":"10", "W":"+5", "H":"20", "notes":"Large, Can move through terrain, Ignores rough ground movement penalty"},
+	"Snow Troll":{"M":"4", "F":"+4", "S":"+0", "A":"14", "W":"+2", "H":"16", "notes":"Large, +2 damage"},
+	"Werewolf":{"M":"7", "F":"+4", "S":"+0", "A":"11", "W":"+5", "H":"12", "notes":"Bounty(20gc), Expert Climber"},
+	"Armored Skeleton":{"M":"6", "F":"+2", "S":"+0", "A":"12", "W":"+0", "H":"1", "notes":"Pack Hunter, Undead"},
+	"Animated Skull":{"M":"6", "F":"+0", "S":"+0", "A":"10", "W":"-2", "H":"1", "notes":"Levitate, Undead"},
+	"Ghoul":{"M":"6", "F":"+2", "S":"+0", "A":"10", "W":"+2", "H":"10", "notes":"Undead"},
+	"Skeleton":{"M":"6", "F":"+1", "S":"+0", "A":"10", "W":"+0", "H":"1", "notes":"Undead"},
+	"Skeleton Archer":{"M":"6", "F":"+0", "S":"+0", "A":"10", "W":"+0", "H":"1", "notes":"Undead, Bow"},
+	"Vampire":{"M":"7", "F":"+4", "S":"+0", "A":"12", "W":"+5", "H":"14", "notes":"Immune to non-magic, Attacks count as Magic, Immune to Control, Immune to Invisibility, Beauty, destroys Illusionary Soldiers on contact, Undead"},
+	"Wraith":{"M":"6", "F":"+2", "S":"+0", "A":"10", "W":"+3", "H":"6", "notes":"Immaterial, Immune to non-magic, Attacks count as Magic, x2 damage, Undead"},
+	"Zombie":{"M":"4", "F":"+1", "S":"+0", "A":"12", "W":"+0", "H":"6", "notes":"Undead"},
+}
+var _base_game_encounter_table := {
+	"minor":["Skeleton", "Skeletons2", "Armored Skeleton", "Zombie", "Zombies2", "Ghoul", "Bear", "Boar", "Giant Rat", "Giant Rats2", "Giant Rats4", "Ice Spider", "Snow Leopard", "Wild Dog", "Wild Dogs2", "Wolf", "Wolves2", "Small Construct", "Imp", "Ice Toad"],
+	"medium":["Armored Skeletons2", "Ghoul", "Ghouls2", "Wraith", "Boar", "Boar", "Bear", "Bear", "Ice Spider", "Ice Spiders2", "Snow Leopard", "White Gorilla", "Wolves2", "Medium Construct", "Minor Demon", "Ice Toad", "Ice Toads2", "Snow Troll", "Worm", "Werewolf"],
+	"major":["Armored Skeletons3", "Ghoul", "Ghouls2", "Ghouls3", "Wraith", "Wraith", "Vampire", "White Gorilla", "White Gorilla", "Large Construct", "Large Construct", "Minor Demon", "Minor Demon", "Frost Giant", "Snow Troll", "Snow Trolls2", "Werewolf", "Worm", "Worm"]
+}
+var _lich_lord_encounter_table := {
+	"minor":["Skeleton", "Skeletons2", "Armored Skeletons2", "Zombies2", "Zombies3", "Ghouls3", "Frost Wraith", "Boar", "Giant Rat", "Giant Rats2", "Rangifer", "Ice Spider", "Snow Leopard", "Zombie Troll", "Wild Dogs2", "Wolf", "Wraith", "Small Construct", "Imp", "Wraith Knight"],
+	"medium":["Armored Skeletons2", "Ghoul", "Ghouls2", "Frost Wraith", "Wraith", "Bear", "Spectre", "Boar", "Ice Spider", "Death Cultists4", "Snow Leopard", "Rangifers2", "Banshee", "Medium Construct", "Minor Demon", "Ice Toad", "Wraith Knight", "Zombie Troll", "Worm", "Ghoul King"],
+	"major":["Armored Skeletons3", "Death Cultists4", "Ghouls3", "Ghouls3", "Rangifers3", "Wraith", "Vampire", "Zombie Troll", "White Gorilla", "Spectre", "Large Construct", "Minor Demon", "Frost Wraiths2", "Banshee", "Snow Troll", "Wraith Knight", "Snow Trolls2", "Werewolf", "Ghoul King", "Lich Lord"]
+}
+var _treasure_table = TTable.BASE
+var _encounter_table = ETable.BASE
 
 func _ready():
 	randomize()
-	$ItemList.select(0)
+	$TreasureTables.select(0)
+	$EncouterTables.select(0)
 
-func _on_Button_pressed():
+func _on_TreasureButton_pressed():
 	var you_found := ""
 	var treasure := []
-	if _table != Table.LICH:
-		if _table == Table.BASE:
+	if _treasure_table != TTable.LICH:
+		if _treasure_table == TTable.BASE:
 			var treasure_table := _base_game_treasure_table
 			var treasure_index := d(20)
 			treasure = treasure_table[treasure_index]
-		elif _table == Table.ALCHEMY:
+		elif _treasure_table == TTable.ALCHEMY:
 			var treasure_table := _dark_alchemy_treasure_table
 			var treasure_index := d(20)
 			treasure = treasure_table[treasure_index]
@@ -219,13 +274,13 @@ func _on_Button_pressed():
 					elif item["type"] == "grimoire":
 						var spell := _generate_spell()
 						you_found += "Grimoire of "+spell+" "
-	elif _table == Table.LICH:
+	elif _treasure_table == TTable.LICH:
 		var item:String = _lich_lord_treasure[d(20)]
 		if item != "Ivory Scroll":
 			you_found = item
 		else:
 			you_found = "Ivory Scroll of "+_generate_spell()+": The Ivory Scroll may be used once per game. When used, roll a die. On a 19-20, the scroll is destroyed. sell: 200"
-	$Label.text = you_found
+	$Results.text = you_found
 
 func splice(item:Dictionary)->String:
 	var spliced := ""
@@ -254,8 +309,57 @@ func d(sides:int)->int:
 
 func _on_ItemList_item_selected(index):
 	if index == 0:
-		_table = Table.BASE
+		_treasure_table = TTable.BASE
 	elif index == 1:
-		_table = Table.LICH
+		_treasure_table = TTable.LICH
 	elif index == 2:
-		_table = Table.ALCHEMY
+		_treasure_table = TTable.ALCHEMY
+
+func _on_EncouterTables_item_selected(index):
+	if index == 0:
+		_encounter_table = ETable.BASE
+	elif index == 1:
+		_encounter_table = ETable.LICH
+	elif index == 2:
+		_encounter_table = ETable.COMP
+
+func _on_Monster_pressed():
+	var table:Dictionary
+	match _encounter_table:
+		ETable.BASE:
+			table = _base_game_encounter_table
+		ETable.LICH:
+			table = _lich_lord_encounter_table
+	var level_number := d(20)+1
+	var level:String
+	if level_number < 13:
+		level = "minor"
+	elif level_number > 18: 
+		level = "major"
+	else:
+		level = "medium"
+	$EncounterStrength.text = level.to_upper()+" ENCOUNTER"
+	var level_table:Array = table[level]
+	var die_size = level_table.size()
+	var monster_name:String = level_table[d(die_size)]
+	var qty := ""
+	var search_for := monster_name
+	if search_for != "Lich Lord":
+		if monster_name.ends_with("2") or monster_name.ends_with("3") or monster_name.ends_with("4"):
+			qty = get_last(monster_name)
+			monster_name.erase(monster_name.length()-1, 1)
+			search_for = monster_name
+		if search_for == "Wolves":
+			search_for = "Wolf"
+		elif search_for.ends_with("s"):
+			search_for.erase(search_for.length()-1, 1)
+		var monster:Dictionary = _monsters[search_for]
+		$Results.text = qty+" "+monster_name+"\n"+"M    F    S   A    W   H\n"+monster["M"]+"   "+monster["F"]+"  "+monster["S"]+"  "+monster["A"]+"   "+monster["W"]+"   "+monster["H"]+"\n"+monster["notes"]
+
+func get_last(string:String)->String:
+	var last_char := ""
+	for c in string:
+		if string.find_last(c) == string.length()-1:
+			last_char = c
+			break
+	return last_char
