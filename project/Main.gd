@@ -197,7 +197,7 @@ var _monsters := {
 	"Minor Demon":{"M":"6", "F":"+3", "S":"+0", "A":"11", "W":"+4", "H":"12", "notes":"Demon"},
 	"Major Demon":{"M":"6", "F":"+5", "S":"+0", "A":"12", "W":"+6", "H":"15", "notes":"Demon, Large, +2 damage, Immune to Invisibility, Beauty, destroys Illusionary Soldiers on contact"},
 	"Frost Giant":{"M":"6", "F":"+5", "S":"+0", "A":"15", "W":"+4", "H":"25", "notes":"Takes 2 less elemental damage, Large, +2 damage"},
-	"Worm":{"M":"7", "F":"+4", "S":"+0", "A":"10", "W":"+5", "H":"20", "notes":"Large, Can move through terrain, Ignores rough ground movement penalty"},
+	"Giant Worm":{"M":"7", "F":"+4", "S":"+0", "A":"10", "W":"+5", "H":"20", "notes":"Large, Can move through terrain, Ignores rough ground movement penalty"},
 	"Snow Troll":{"M":"4", "F":"+4", "S":"+0", "A":"14", "W":"+2", "H":"16", "notes":"Large, +2 damage"},
 	"Werewolf":{"M":"7", "F":"+4", "S":"+0", "A":"11", "W":"+5", "H":"12", "notes":"Bounty(20gc), Expert Climber"},
 	"Armored Skeleton":{"M":"6", "F":"+2", "S":"+0", "A":"12", "W":"+0", "H":"1", "notes":"Pack Hunter, Undead"},
@@ -211,13 +211,18 @@ var _monsters := {
 }
 var _base_game_encounter_table := {
 	"minor":["Skeleton", "Skeletons2", "Armored Skeleton", "Zombie", "Zombies2", "Ghoul", "Bear", "Boar", "Giant Rat", "Giant Rats2", "Giant Rats4", "Ice Spider", "Snow Leopard", "Wild Dog", "Wild Dogs2", "Wolf", "Wolves2", "Small Construct", "Imp", "Ice Toad"],
-	"medium":["Armored Skeletons2", "Ghoul", "Ghouls2", "Wraith", "Boar", "Boar", "Bear", "Bear", "Ice Spider", "Ice Spiders2", "Snow Leopard", "White Gorilla", "Wolves2", "Medium Construct", "Minor Demon", "Ice Toad", "Ice Toads2", "Snow Troll", "Worm", "Werewolf"],
-	"major":["Armored Skeletons3", "Ghoul", "Ghouls2", "Ghouls3", "Wraith", "Wraith", "Vampire", "White Gorilla", "White Gorilla", "Large Construct", "Large Construct", "Minor Demon", "Minor Demon", "Frost Giant", "Snow Troll", "Snow Trolls2", "Werewolf", "Worm", "Worm"]
+	"medium":["Armored Skeletons2", "Ghoul", "Ghouls2", "Wraith", "Boar", "Boar", "Bear", "Bear", "Ice Spider", "Ice Spiders2", "Snow Leopard", "White Gorilla", "Wolves2", "Medium Construct", "Minor Demon", "Ice Toad", "Ice Toads2", "Snow Troll", "Giant Worm", "Werewolf"],
+	"major":["Armored Skeletons3", "Ghoul", "Ghouls2", "Ghouls3", "Wraith", "Wraith", "Vampire", "White Gorilla", "White Gorilla", "Large Construct", "Large Construct", "Minor Demon", "Minor Demon", "Frost Giant", "Snow Troll", "Snow Trolls2", "Werewolf", "Giant Worm", "Giant Worm"]
 }
 var _lich_lord_encounter_table := {
 	"minor":["Skeleton", "Skeletons2", "Armored Skeletons2", "Zombies2", "Zombies3", "Ghouls3", "Frost Wraith", "Boar", "Giant Rat", "Giant Rats2", "Rangifer", "Ice Spider", "Snow Leopard", "Zombie Troll", "Wild Dogs2", "Wolf", "Wraith", "Small Construct", "Imp", "Wraith Knight"],
-	"medium":["Armored Skeletons2", "Ghoul", "Ghouls2", "Frost Wraith", "Wraith", "Bear", "Spectre", "Boar", "Ice Spider", "Death Cultists4", "Snow Leopard", "Rangifers2", "Banshee", "Medium Construct", "Minor Demon", "Ice Toad", "Wraith Knight", "Zombie Troll", "Worm", "Ghoul King"],
+	"medium":["Armored Skeletons2", "Ghoul", "Ghouls2", "Frost Wraith", "Wraith", "Bear", "Spectre", "Boar", "Ice Spider", "Death Cultists4", "Snow Leopard", "Rangifers2", "Banshee", "Medium Construct", "Minor Demon", "Ice Toad", "Wraith Knight", "Zombie Troll", "Giant Worm", "Ghoul King"],
 	"major":["Armored Skeletons3", "Death Cultists4", "Ghouls3", "Ghouls3", "Rangifers3", "Wraith", "Vampire", "Zombie Troll", "White Gorilla", "Spectre", "Large Construct", "Minor Demon", "Frost Wraiths2", "Banshee", "Snow Troll", "Wraith Knight", "Snow Trolls2", "Werewolf", "Ghoul King", "Lich Lord"]
+}
+var _compilation_encounter_table := {
+	"minor":["Skeleton", "Skeletons2", "Armored Skeleton", "Ice Toad", "Ghoul", "Zombies2", "Frost Wraith", "Boar", "Giant Rat", "Giant Rats2", "Rangifer", "Ice Spider", "Snow Leopard", "Snow Troll", "Wild Dogs2", "Wolf", "Wolves2", "Wraith", "Small Construct", "Wraith Knight"],
+	"medium":["Fire-Flinger", "Burning Skeleton", "Armored Skeletons2", "Ghoul", "Ghouls2", "Frost Wraith", "Wraith", "Foulhorn", "Bear", "Spectre", "Snow Leopard", "Ice Toad", "Rangifers2", "Banshee", "Medium Construct", "Minor Demon", "Wraith Knight", "Snow Troll", "Giant Worm", "Nullman"],
+	"major":["Fire-Flinger", "Burning Skeletons2", "Starfire Elemental", "Foulhorn", "Nullmen2", "Armored Skeletons3", "Ghouls3", "Wraith", "Spectre", "Banshee", "Rangifers3", "Vampire", "Snow Troll", "Large Construct", "Minor Demon", "White Gorillas2", "Giant Worm", "Burning Skeletons3", "Wraith Knight", "Frost Giant"]
 }
 var _treasure_table = TTable.BASE
 var _encounter_table = ETable.BASE
@@ -226,8 +231,10 @@ func _ready():
 	randomize()
 	$TreasureTables.select(0)
 	$EncouterTables.select(0)
+	print(str(_compilation_encounter_table["major"].size()))
 
 func _on_TreasureButton_pressed():
+	$EncounterStrength.text = ""
 	var you_found := ""
 	var treasure := []
 	if _treasure_table != TTable.LICH:
@@ -330,6 +337,8 @@ func _on_Monster_pressed():
 			table = _base_game_encounter_table
 		ETable.LICH:
 			table = _lich_lord_encounter_table
+		ETable.COMP:
+			table = _compilation_encounter_table
 	var level_number := d(20)+1
 	var level:String
 	if level_number < 13:
@@ -351,6 +360,8 @@ func _on_Monster_pressed():
 			search_for = monster_name
 		if search_for == "Wolves":
 			search_for = "Wolf"
+		if search_for == "Nullmen":
+			search_for = "Nullman"
 		elif search_for.ends_with("s"):
 			search_for.erase(search_for.length()-1, 1)
 		var monster:Dictionary = _monsters[search_for]
