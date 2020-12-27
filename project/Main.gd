@@ -231,7 +231,6 @@ func _ready():
 	randomize()
 	$TreasureTables.select(0)
 	$EncouterTables.select(0)
-	print(str(_compilation_encounter_table["major"].size()))
 
 func _on_TreasureButton_pressed():
 	$EncounterStrength.text = ""
@@ -286,7 +285,7 @@ func _on_TreasureButton_pressed():
 		if item != "Ivory Scroll":
 			you_found = item
 		else:
-			you_found = "Ivory Scroll of "+_generate_spell()+": The Ivory Scroll may be used once per game. When used, roll a die. On a 19-20, the scroll is destroyed. sell: 200"
+			you_found = "Ivory Scroll of "+_generate_spell()+": An Ivory Scroll may be used once per game. When used, roll a die. On a 19-20, the scroll is destroyed. sell: 200"
 	$Results.text = you_found
 
 func splice(item:Dictionary)->String:
