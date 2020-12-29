@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://IM_Fell_English_SC/IMFellEnglishSC-Regular.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+font_data = ExtResource( 3 )
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -16,32 +25,17 @@ __meta__ = {
 }
 
 [node name="TreasureLabel" type="Label" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -225.0
-margin_top = 100.0
+margin_top = -30.0
 margin_right = 225.0
 margin_bottom = 300.0
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 2 )
 align = 1
 autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TreasureTables" type="ItemList" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -103.0
-margin_top = 50.0
-margin_right = 103.0
-margin_bottom = 105.0
-custom_fonts/font = ExtResource( 2 )
-items = [ "Base Game", null, false, "Thaw of the Lich Lord", null, false, "Dark Alchemy", null, false ]
-auto_height = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -51,17 +45,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -91.0
-margin_top = -35.0
-margin_right = 91.0
-margin_bottom = 35.0
+margin_left = -134.0
+margin_top = -150.0
+margin_right = 134.0
+margin_bottom = -100.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Monster" type="Button" parent="Buttons"]
-margin_right = 182.0
-margin_bottom = 33.0
+margin_right = 268.0
+margin_bottom = 45.0
 custom_fonts/font = ExtResource( 2 )
 text = "Random Encounter"
 __meta__ = {
@@ -69,52 +63,35 @@ __meta__ = {
 }
 
 [node name="Treasure" type="Button" parent="Buttons"]
-margin_top = 37.0
-margin_right = 182.0
-margin_bottom = 70.0
+margin_top = 49.0
+margin_right = 268.0
+margin_bottom = 94.0
 custom_fonts/font = ExtResource( 2 )
 text = "Random Treasure"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TLabel" type="Label" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -75.0
-margin_top = 10.0
-margin_right = 75.0
-margin_bottom = 27.0
-custom_fonts/font = ExtResource( 2 )
-text = "Treasure Table"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Elabel" type="Label" parent="."]
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -75.0
-margin_top = -235.0
-margin_right = 75.0
-margin_bottom = -220.0
+margin_left = -113.5
+margin_top = 20.0
+margin_right = 113.5
+margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
 text = "Encounter Table"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EncouterTables" type="ItemList" parent="."]
+[node name="Expansions" type="ItemList" parent="."]
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -106.0
-margin_top = -200.0
-margin_right = 106.0
-margin_bottom = -95.0
+margin_left = -159.5
+margin_top = 75.0
+margin_right = 159.5
+margin_bottom = 220.0
 custom_fonts/font = ExtResource( 2 )
 items = [ "Base Game", null, false, "Thaw of the Lich Lord", null, false, "Alex's Compilation", null, false ]
 __meta__ = {
@@ -122,7 +99,6 @@ __meta__ = {
 }
 
 [node name="EncounterItems" type="Label" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 autowrap = true
@@ -135,10 +111,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -224.0
-margin_top = 50.0
-margin_right = 225.0
-margin_bottom = 77.0
+margin_left = -224.5
+margin_top = -19.5
+margin_right = 224.5
+margin_bottom = 19.5
 custom_fonts/font = ExtResource( 2 )
 align = 1
 valign = 1
@@ -155,7 +131,7 @@ margin_left = -224.0
 margin_top = 220.0
 margin_right = 225.0
 margin_bottom = 400.0
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "BOOGAH BOOGAH"
 align = 1
 autowrap = true
@@ -169,10 +145,11 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -225.0
-margin_top = 100.0
+margin_top = 50.0
 margin_right = 225.0
-margin_bottom = 114.0
+margin_bottom = 50.0
 custom_fonts/font = ExtResource( 2 )
+text = "NOMBRE"
 align = 1
 
 [node name="GridContainer" type="GridContainer" parent="EncounterItems"]
@@ -180,97 +157,96 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -55.0
-margin_top = 150.0
-margin_right = 55.0
-margin_bottom = 29.0
+margin_left = -78.5
+margin_top = 120.0
+margin_right = 78.5
+margin_bottom = 41.0
 columns = 6
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Mheader" type="Label" parent="EncounterItems/GridContainer"]
-margin_right = 19.0
-margin_bottom = 27.0
+margin_right = 29.0
+margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
 text = "M"
 
 [node name="Fheader" type="Label" parent="EncounterItems/GridContainer"]
-margin_left = 23.0
-margin_right = 35.0
-margin_bottom = 27.0
+margin_left = 33.0
+margin_right = 52.0
+margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
 text = "F"
 
 [node name="Sheader" type="Label" parent="EncounterItems/GridContainer"]
-margin_left = 39.0
-margin_right = 49.0
-margin_bottom = 27.0
+margin_left = 56.0
+margin_right = 71.0
+margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
 text = "S"
 
 [node name="Aheader" type="Label" parent="EncounterItems/GridContainer"]
-margin_left = 53.0
-margin_right = 66.0
-margin_bottom = 27.0
+margin_left = 75.0
+margin_right = 95.0
+margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
 text = "A"
 
 [node name="Wheader" type="Label" parent="EncounterItems/GridContainer"]
-margin_left = 70.0
-margin_right = 89.0
-margin_bottom = 27.0
+margin_left = 99.0
+margin_right = 127.0
+margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
 text = "W"
 
 [node name="Hheader" type="Label" parent="EncounterItems/GridContainer"]
-margin_left = 93.0
-margin_right = 110.0
-margin_bottom = 27.0
+margin_left = 131.0
+margin_right = 157.0
+margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
 text = "H"
 
 [node name="M" type="Label" parent="EncounterItems/GridContainer"]
-margin_top = 31.0
-margin_right = 19.0
-margin_bottom = 58.0
+margin_top = 43.0
+margin_right = 29.0
+margin_bottom = 82.0
 custom_fonts/font = ExtResource( 2 )
 
 [node name="F" type="Label" parent="EncounterItems/GridContainer"]
-margin_left = 23.0
-margin_top = 31.0
-margin_right = 35.0
-margin_bottom = 58.0
+margin_left = 33.0
+margin_top = 43.0
+margin_right = 52.0
+margin_bottom = 82.0
 custom_fonts/font = ExtResource( 2 )
 
 [node name="S" type="Label" parent="EncounterItems/GridContainer"]
-margin_left = 39.0
-margin_top = 31.0
-margin_right = 49.0
-margin_bottom = 58.0
+margin_left = 56.0
+margin_top = 43.0
+margin_right = 71.0
+margin_bottom = 82.0
 custom_fonts/font = ExtResource( 2 )
 
 [node name="A" type="Label" parent="EncounterItems/GridContainer"]
-margin_left = 53.0
-margin_top = 31.0
-margin_right = 66.0
-margin_bottom = 58.0
+margin_left = 75.0
+margin_top = 43.0
+margin_right = 95.0
+margin_bottom = 82.0
 custom_fonts/font = ExtResource( 2 )
 
 [node name="W" type="Label" parent="EncounterItems/GridContainer"]
-margin_left = 70.0
-margin_top = 31.0
-margin_right = 89.0
-margin_bottom = 58.0
+margin_left = 99.0
+margin_top = 43.0
+margin_right = 127.0
+margin_bottom = 82.0
 custom_fonts/font = ExtResource( 2 )
 
 [node name="H" type="Label" parent="EncounterItems/GridContainer"]
-margin_left = 93.0
-margin_top = 31.0
-margin_right = 110.0
-margin_bottom = 58.0
+margin_left = 131.0
+margin_top = 43.0
+margin_right = 157.0
+margin_bottom = 82.0
 custom_fonts/font = ExtResource( 2 )
-[connection signal="item_selected" from="TreasureTables" to="." method="_on_ItemList_item_selected"]
 [connection signal="pressed" from="Buttons/Monster" to="." method="_on_Monster_pressed"]
 [connection signal="pressed" from="Buttons/Treasure" to="." method="_on_TreasureButton_pressed"]
-[connection signal="item_selected" from="EncouterTables" to="." method="_on_EncouterTables_item_selected"]
+[connection signal="item_selected" from="Expansions" to="." method="_on_Expansions_item_selected"]

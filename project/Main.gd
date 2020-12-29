@@ -1,7 +1,6 @@
 extends Control
 
-enum TTable {BASE, LICH, ALCHEMY}
-enum ETable {BASE, LICH, COMP}
+enum Table {BASE, LICH, COMP}
 var _lesser_potions := [
 	{"name":"Potion of Healing", "effect":"+5 health", "cost":"75", "sell":"50"},
 	{"name":"Potion of Strength", "effect":"+1 fight", "cost":"100", "sell":"40"},
@@ -176,7 +175,7 @@ var _monsters := {
 	"Banshee":{"M":"9", "F":"+0", "S":"+0", "A":"10", "W":"+5", "H":"10", "notes":"Undead, Immaterial, Immune to non-magic, On its turn Banshee will make a random move, and then all non-undead or constructs within 6 inches must make a will roll of 10 or take damage by the amount they failed"},
 	"Death Cultist":{"M":"6", "F":"+0", "S":"+0", "A":"10", "W":"+5", "H":"10", "notes":""},
 	"Frost Wraith":{"M":"6", "F":"+2", "S":"+0", "A":"10", "W":"+3", "H":"6", "notes":"Undead, +2 fight against Living creatures"},
-	"The Ghoul King":{"M":"8", "F":"+4", "S":"+0", "A":"12", "W":"+6", "H":"14", "notes":"Undead, Immune to Control, +2 damage"},
+	"Ghoul King":{"M":"8", "F":"+4", "S":"+0", "A":"12", "W":"+6", "H":"14", "notes":"Undead, Immune to Control, +2 damage"},
 	"Rangifer":{"M":"7", "F":"+2", "S":"+0", "A":"12", "W":"+3", "H":"12", "notes":"+1 fight and attacks count as Magical against Undead"},
 	"Spectre":{"M":"9", "F":"+0", "S":"+0", "A":"10", "W":"+10", "H":"8", "notes":"Undead, Immaterial, Immune to non-magic"},
 	"Wraith Knight":{"M":"6", "F":"+3", "S":"+0", "A":"10", "W":"+5", "H":"10", "notes":"Undead, Immaterial, Immune to Control, Immune to non-magic, x2 damage"},
@@ -224,28 +223,26 @@ var _compilation_encounter_table := {
 	"medium":["Fire-Flinger", "Burning Skeleton", "Armored Skeletons2", "Ghoul", "Ghouls2", "Frost Wraith", "Wraith", "Foulhorn", "Bear", "Spectre", "Snow Leopard", "Ice Toad", "Rangifers2", "Banshee", "Medium Construct", "Minor Demon", "Wraith Knight", "Snow Troll", "Giant Worm", "Nullman"],
 	"major":["Fire-Flinger", "Burning Skeletons2", "Starfire Elemental", "Foulhorn", "Nullmen2", "Armored Skeletons3", "Ghouls3", "Wraith", "Spectre", "Banshee", "Rangifers3", "Vampire", "Snow Troll", "Large Construct", "Minor Demon", "White Gorillas2", "Giant Worm", "Burning Skeletons3", "Wraith Knight", "Frost Giant"]
 }
-var _treasure_table = TTable.BASE
-var _encounter_table = ETable.BASE
+var _expansion = Table.BASE
 onready var _encounter := $EncounterItems
 onready var _treasure := $TreasureLabel
 onready var _elevel := $EncounterItems/EncounterStrength
 
 func _ready():
 	randomize()
-	$TreasureTables.select(0)
-	$EncouterTables.select(0)
+	$Expansions.select(0)
 
 func _on_TreasureButton_pressed():
 	_encounter.visible = false
 	_treasure.visible = true
 	var you_found := ""
 	var treasure := []
-	if _treasure_table != TTable.LICH:
-		if _treasure_table == TTable.BASE:
+	if _expansion != Table.LICH:
+		if _expansion == Table.BASE:
 			var treasure_table := _base_game_treasure_table
 			var treasure_index := d(20)
 			treasure = treasure_table[treasure_index]
-		elif _treasure_table == TTable.ALCHEMY:
+		elif _expansion == Table.COMP:
 			var treasure_table := _dark_alchemy_treasure_table
 			var treasure_index := d(20)
 			treasure = treasure_table[treasure_index]
@@ -253,13 +250,13 @@ func _on_TreasureButton_pressed():
 			var value := ""
 			if item["type"] == "coins":
 				value = str(item["qty"])
-				you_found += (value+"gc")+(", " if treasure.size() > 1 else ".")
+				you_found += (value+"gc")+(", " if treasure.size() > 1 else ".")+"\n"
 			elif item["type"] == "rand10":
 				value = str((d(20)+1)*10)
-				you_found += (value+"gc")+(", " if treasure.size() > 1 else ".")
+				you_found += (value+"gc")+(", " if treasure.size() > 1 else ".")+"\n"
 			elif item["type"] == "rand20":
 				value = str((d(20)+1)*20)
-				you_found += (value+"gc")+(", " if treasure.size() > 1 else ".")
+				you_found += (value+"gc")+(", " if treasure.size() > 1 else ".")+"\n"
 			if item["type"] != "coins":
 				for x in item["qty"]:
 					if item["type"] == "potion":
@@ -280,11 +277,12 @@ func _on_TreasureButton_pressed():
 						you_found += splice(weapon)
 					elif item["type"] == "scroll":
 						var spell := _generate_spell()
-						you_found += "Scroll of "+spell+" "
+						you_found += "SCROLL OF "+spell.to_upper()+" "
 					elif item["type"] == "grimoire":
 						var spell := _generate_spell()
-						you_found += "Grimoire of "+spell+" "
-	elif _treasure_table == TTable.LICH:
+						you_found += "GRIMOIRE OF "+spell.to_upper()+" "
+					you_found += "\n"
+	elif _expansion == Table.LICH:
 		var item:String = _lich_lord_treasure[d(20)]
 		if item != "Ivory Scroll":
 			you_found = item
@@ -294,7 +292,7 @@ func _on_TreasureButton_pressed():
 
 func splice(item:Dictionary)->String:
 	var spliced := ""
-	spliced += item["name"]+": "
+	spliced += item["name"].to_upper()+": "
 	if item["effect"] == "P":
 		spliced += _blank_of_power+", "
 	elif item["effect"] == "S":
@@ -317,32 +315,24 @@ func _generate_spell()->String:
 func d(sides:int)->int:
 	return randi()%sides
 
-func _on_ItemList_item_selected(index):
+func _on_Expansions_item_selected(index):
 	if index == 0:
-		_treasure_table = TTable.BASE
+		_expansion = Table.BASE
 	elif index == 1:
-		_treasure_table = TTable.LICH
+		_expansion = Table.LICH
 	elif index == 2:
-		_treasure_table = TTable.ALCHEMY
-
-func _on_EncouterTables_item_selected(index):
-	if index == 0:
-		_encounter_table = ETable.BASE
-	elif index == 1:
-		_encounter_table = ETable.LICH
-	elif index == 2:
-		_encounter_table = ETable.COMP
+		_expansion = Table.COMP
 
 func _on_Monster_pressed():
 	_encounter.visible = true
 	_treasure.visible = false
 	var table:Dictionary
-	match _encounter_table:
-		ETable.BASE:
+	match _expansion:
+		Table.BASE:
 			table = _base_game_encounter_table
-		ETable.LICH:
+		Table.LICH:
 			table = _lich_lord_encounter_table
-		ETable.COMP:
+		Table.COMP:
 			table = _compilation_encounter_table
 	var level_number := d(20)+1
 	var level:String
