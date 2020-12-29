@@ -226,6 +226,9 @@ var _compilation_encounter_table := {
 }
 var _treasure_table = TTable.BASE
 var _encounter_table = ETable.BASE
+onready var _encounter := $EncounterItems
+onready var _treasure := $TreasureLabel
+onready var _elevel := $EncounterItems/EncounterStrength
 
 func _ready():
 	randomize()
@@ -233,7 +236,8 @@ func _ready():
 	$EncouterTables.select(0)
 
 func _on_TreasureButton_pressed():
-	$EncounterStrength.text = ""
+	_encounter.hide()
+	_treasure.show()
 	var you_found := ""
 	var treasure := []
 	if _treasure_table != TTable.LICH:
@@ -330,6 +334,8 @@ func _on_EncouterTables_item_selected(index):
 		_encounter_table = ETable.COMP
 
 func _on_Monster_pressed():
+	_encounter.show()
+	_treasure.hide()
 	var table:Dictionary
 	match _encounter_table:
 		ETable.BASE:
@@ -346,7 +352,7 @@ func _on_Monster_pressed():
 		level = "major"
 	else:
 		level = "medium"
-	$EncounterStrength.text = level.to_upper()+" ENCOUNTER"
+	_elevel.text = level.to_upper()+" ENCOUNTER"
 	var level_table:Array = table[level]
 	var die_size = level_table.size()
 	var monster_name:String = level_table[d(die_size)]
@@ -364,7 +370,9 @@ func _on_Monster_pressed():
 		elif search_for.ends_with("s"):
 			search_for.erase(search_for.length()-1, 1)
 		var monster:Dictionary = _monsters[search_for]
-		$Results.text = qty+" "+monster_name+"\n"+"M    F    S   A    W   H\n"+monster["M"]+"   "+monster["F"]+"  "+monster["S"]+"  "+monster["A"]+"   "+monster["W"]+"   "+monster["H"]+"\n"+monster["notes"]
+		var stats := ["M", "F", "S", "A", "W", "H"]
+		for stat in stats:
+			get_node("EncounterItems/GridContainer/"+stat).text = monster[stat]
 
 func get_last(string:String)->String:
 	var last_char := ""
