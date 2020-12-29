@@ -236,8 +236,8 @@ func _ready():
 	$EncouterTables.select(0)
 
 func _on_TreasureButton_pressed():
-	_encounter.hide()
-	_treasure.show()
+	_encounter.visible = false
+	_treasure.visible = true
 	var you_found := ""
 	var treasure := []
 	if _treasure_table != TTable.LICH:
@@ -290,7 +290,7 @@ func _on_TreasureButton_pressed():
 			you_found = item
 		else:
 			you_found = "Ivory Scroll of "+_generate_spell()+": An Ivory Scroll may be used once per game. When used, roll a die. On a 19-20, the scroll is destroyed. sell: 200"
-	$Results.text = you_found
+	_treasure.text = you_found
 
 func splice(item:Dictionary)->String:
 	var spliced := ""
@@ -334,8 +334,8 @@ func _on_EncouterTables_item_selected(index):
 		_encounter_table = ETable.COMP
 
 func _on_Monster_pressed():
-	_encounter.show()
-	_treasure.hide()
+	_encounter.visible = true
+	_treasure.visible = false
 	var table:Dictionary
 	match _encounter_table:
 		ETable.BASE:
@@ -370,9 +370,11 @@ func _on_Monster_pressed():
 		elif search_for.ends_with("s"):
 			search_for.erase(search_for.length()-1, 1)
 		var monster:Dictionary = _monsters[search_for]
+		$EncounterItems/Name.text = qty+" "+monster_name
 		var stats := ["M", "F", "S", "A", "W", "H"]
 		for stat in stats:
 			get_node("EncounterItems/GridContainer/"+stat).text = monster[stat]
+		$EncounterItems/Notes.text = monster["notes"]
 
 func get_last(string:String)->String:
 	var last_char := ""
