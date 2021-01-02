@@ -239,6 +239,7 @@ func _ready():
 	_snowtimer.start(_flakes_per_second)
 
 func _on_TreasureButton_pressed():
+	$Treasure.play()
 	_encounter.visible = false
 	_treasure.visible = true
 	var you_found := ""
@@ -330,6 +331,7 @@ func _on_Expansions_item_selected(index):
 		_expansion = Table.COMP
 
 func _on_Monster_pressed():
+	$Encounter.play()
 	_encounter.visible = true
 	_treasure.visible = false
 	var table:Dictionary
