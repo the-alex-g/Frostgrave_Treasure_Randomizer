@@ -1,14 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://IM_Fell_English_SC/IMFellEnglishSC-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Background.png" type="Texture" id=4]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 20
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 20
 font_data = ExtResource( 3 )
 
@@ -24,6 +25,35 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Background" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+margin_left = -21.0
+margin_top = -20.0
+margin_right = 468.0
+margin_bottom = 846.0
+color = Color( 0.752941, 0.811765, 0.827451, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buildings" type="Sprite" parent="Background"]
+visible = false
+texture = ExtResource( 4 )
+centered = false
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Background"]
+amount = 20
+lifetime = 10.0
+local_coords = false
+direction = Vector2( 0, 1 )
+gravity = Vector2( 0, 0 )
+initial_velocity = 100.0
+scale_amount = 10.0
+
+[node name="ParticleLocationVarianceTimer" type="Timer" parent="Background"]
+wait_time = 0.5
+
 [node name="TreasureLabel" type="Label" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -33,7 +63,8 @@ margin_left = -225.0
 margin_top = -30.0
 margin_right = 225.0
 margin_bottom = 300.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 align = 1
 autowrap = true
 __meta__ = {
@@ -80,6 +111,7 @@ margin_top = 20.0
 margin_right = 113.5
 margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 text = "Encounter Table"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -99,6 +131,7 @@ __meta__ = {
 }
 
 [node name="EncounterItems" type="Label" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 autowrap = true
@@ -116,6 +149,7 @@ margin_top = -19.5
 margin_right = 224.5
 margin_bottom = 19.5
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 align = 1
 valign = 1
 __meta__ = {
@@ -131,8 +165,8 @@ margin_left = -224.0
 margin_top = 220.0
 margin_right = 225.0
 margin_bottom = 400.0
-custom_fonts/font = SubResource( 1 )
-text = "BOOGAH BOOGAH"
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 align = 1
 autowrap = true
 __meta__ = {
@@ -149,8 +183,11 @@ margin_top = 50.0
 margin_right = 225.0
 margin_bottom = 50.0
 custom_fonts/font = ExtResource( 2 )
-text = "NOMBRE"
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="GridContainer" type="GridContainer" parent="EncounterItems"]
 anchor_left = 0.5
@@ -170,6 +207,7 @@ __meta__ = {
 margin_right = 29.0
 margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 text = "M"
 
 [node name="Fheader" type="Label" parent="EncounterItems/GridContainer"]
@@ -177,6 +215,7 @@ margin_left = 33.0
 margin_right = 52.0
 margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 text = "F"
 
 [node name="Sheader" type="Label" parent="EncounterItems/GridContainer"]
@@ -184,6 +223,7 @@ margin_left = 56.0
 margin_right = 71.0
 margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 text = "S"
 
 [node name="Aheader" type="Label" parent="EncounterItems/GridContainer"]
@@ -191,6 +231,7 @@ margin_left = 75.0
 margin_right = 95.0
 margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 text = "A"
 
 [node name="Wheader" type="Label" parent="EncounterItems/GridContainer"]
@@ -198,6 +239,7 @@ margin_left = 99.0
 margin_right = 127.0
 margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 text = "W"
 
 [node name="Hheader" type="Label" parent="EncounterItems/GridContainer"]
@@ -205,6 +247,7 @@ margin_left = 131.0
 margin_right = 157.0
 margin_bottom = 39.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 text = "H"
 
 [node name="M" type="Label" parent="EncounterItems/GridContainer"]
@@ -212,6 +255,7 @@ margin_top = 43.0
 margin_right = 29.0
 margin_bottom = 82.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 
 [node name="F" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 33.0
@@ -219,6 +263,7 @@ margin_top = 43.0
 margin_right = 52.0
 margin_bottom = 82.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 
 [node name="S" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 56.0
@@ -226,6 +271,7 @@ margin_top = 43.0
 margin_right = 71.0
 margin_bottom = 82.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 
 [node name="A" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 75.0
@@ -233,6 +279,7 @@ margin_top = 43.0
 margin_right = 95.0
 margin_bottom = 82.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 
 [node name="W" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 99.0
@@ -240,6 +287,7 @@ margin_top = 43.0
 margin_right = 127.0
 margin_bottom = 82.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 
 [node name="H" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 131.0
@@ -247,6 +295,8 @@ margin_top = 43.0
 margin_right = 157.0
 margin_bottom = 82.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+[connection signal="timeout" from="Background/ParticleLocationVarianceTimer" to="." method="_on_ParticleLocationVarianceTimer_timeout"]
 [connection signal="pressed" from="Buttons/Monster" to="." method="_on_Monster_pressed"]
 [connection signal="pressed" from="Buttons/Treasure" to="." method="_on_TreasureButton_pressed"]
 [connection signal="item_selected" from="Expansions" to="." method="_on_Expansions_item_selected"]

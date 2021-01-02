@@ -224,13 +224,19 @@ var _compilation_encounter_table := {
 	"major":["Fire-Flinger", "Burning Skeletons2", "Starfire Elemental", "Foulhorn", "Nullmen2", "Armored Skeletons3", "Ghouls3", "Wraith", "Spectre", "Banshee", "Rangifers3", "Vampire", "Snow Troll", "Large Construct", "Minor Demon", "White Gorillas2", "Giant Worm", "Burning Skeletons3", "Wraith Knight", "Frost Giant"]
 }
 var _expansion = Table.BASE
+var _screen_size:Vector2
 onready var _encounter := $EncounterItems
 onready var _treasure := $TreasureLabel
 onready var _elevel := $EncounterItems/EncounterStrength
+onready var _snow := $Background/CPUParticles2D
+onready var _snowtimer := $Background/ParticleLocationVarianceTimer
 
 func _ready():
+	_screen_size = get_viewport_rect().size
 	randomize()
 	$Expansions.select(0)
+	var _flakes_per_second = _snow.lifetime/_snow.amount
+	_snowtimer.start(_flakes_per_second)
 
 func _on_TreasureButton_pressed():
 	_encounter.visible = false
@@ -373,3 +379,6 @@ func get_last(string:String)->String:
 			last_char = c
 			break
 	return last_char
+
+func _on_ParticleLocationVarianceTimer_timeout():
+	_snow.position.x = rand_range(0, _screen_size.x)
