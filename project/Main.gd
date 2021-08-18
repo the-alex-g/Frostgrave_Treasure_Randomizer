@@ -123,7 +123,7 @@ var _dark_alchemy_treasure_table := [
 	[{"type":"grimoire", "qty":1}],
 ]
 var _lich_lord_treasure := [
-	"Book of Bones: Only a wizard may use book to summon a skeleton instead of a zombie when casting Raise Zombie. If cast out-of-game, you can spend 30gc to upgrade it to and armored skeleton. cost: 300gc",
+	"Book of Bones: Only a wizard may use book to summon a skeleton instead of a zombie when casting Raise Zombie. If cast out-of-game, you can spend 30gc to upgrade it to an armored skeleton. cost: 300gc",
 	"Book of the Rangifer: If a warband has this book, they may hire a rangifer for 100gc. The rangifer leaves the warband if any Undead are present before or after a game. cost: 300gc",
 	"Boots of Leaping: These boots allow the wearer to make one movement action a turn where they take no penalties from rough terrain or climbing. cost: 250gc",
 	"Club of Battering: A two-handed weapon that gives the weilder +1 fight in hand-to-hand combat. When the weilder of this weapon wins a combat, they can push their opponent back up to 3 inches. cost: 300gc",
