@@ -219,17 +219,20 @@ var _lich_lord_encounter_table := {
 	"major":["Armored Skeletons3", "Death Cultists4", "Ghouls3", "Ghouls3", "Rangifers3", "Wraith", "Vampire", "Zombie Troll", "White Gorilla", "Spectre", "Large Construct", "Minor Demon", "Frost Wraiths2", "Banshee", "Snow Troll", "Wraith Knight", "Snow Trolls2", "Werewolf", "Ghoul King", "Lich Lord"]
 }
 var _compilation_encounter_table := {
-	"minor":["Skeleton", "Skeletons2", "Armored Skeleton", "Ice Toad", "Ghoul", "Zombies2", "Frost Wraith", "Boar", "Giant Rat", "Giant Rats2", "Rangifer", "Ice Spider", "Snow Leopard", "Snow Troll", "Wild Dogs2", "Wolf", "Wolves2", "Wraith", "Small Construct", "Wraith Knight"],
+	"minor":["Skeleton", "Skeletons2", "Armored Skeleton", "Ice Toad", "Ghoul", "Zombies2", "Frost Wraith", "Boar", "Giant Rat", "Giant Rats2", "Rangifer", "Ice Spider", "Snow Leopard", "Snow Troll", "Wild Dogs2", "Wolf", "Wolves2", "Imp", "Small Construct", "Wraith Knight"],
 	"medium":["Fire-Flinger", "Burning Skeleton", "Armored Skeletons2", "Ghoul", "Ghouls2", "Frost Wraith", "Wraith", "Foulhorn", "Bear", "Spectre", "Snow Leopard", "Ice Toad", "Rangifers2", "Banshee", "Medium Construct", "Minor Demon", "Wraith Knight", "Snow Troll", "Giant Worm", "Nullman"],
-	"major":["Fire-Flinger", "Burning Skeletons2", "Starfire Elemental", "Foulhorn", "Nullmen2", "Armored Skeletons3", "Ghouls3", "Wraith", "Spectre", "Banshee", "Rangifers3", "Vampire", "Snow Troll", "Large Construct", "Minor Demon", "White Gorillas2", "Giant Worm", "Burning Skeletons3", "Wraith Knight", "Frost Giant"]
+	"major":["Fire-Flinger", "Burning Skeletons2", "Starfire Elemental", "Foulhorn", "Nullmen2", "Armored Skeletons3", "Ghouls3", "Wraith", "Spectre", "Banshee", "Rangifers3", "Vampire", "Snow Troll", "Large Construct", "Major Demon", "White Gorillas2", "Giant Worm", "Burning Skeletons3", "Wraith Knight", "Frost Giant"]
 }
 var _expansion = Table.BASE
 var _screen_size:Vector2
+var _copyright_info_showing := true
 onready var _encounter := $EncounterItems
 onready var _treasure := $TreasureLabel
 onready var _elevel := $EncounterItems/EncounterStrength
 onready var _snow := $Background/CPUParticles2D
 onready var _snowtimer := $Background/ParticleLocationVarianceTimer
+onready var _copyright_info_animator := $CopyrightInfoAnimator
+onready var _copyright_info_button := $CopyrightInfoButton
 
 func _ready():
 	_screen_size = get_viewport_rect().size
@@ -296,6 +299,7 @@ func _on_TreasureButton_pressed():
 		else:
 			you_found = "Ivory Scroll of "+_generate_spell()+": An Ivory Scroll may be used once per game. When used, roll a die. On a 19-20, the scroll is destroyed. sell: 200"
 	_treasure.text = you_found
+	_hide_copyright_info()
 
 func splice(item:Dictionary)->String:
 	var spliced := ""
@@ -373,6 +377,15 @@ func _on_Monster_pressed():
 		for stat in stats:
 			get_node("EncounterItems/GridContainer/"+stat).text = monster[stat]
 		$EncounterItems/Notes.text = monster["notes"]
+		_hide_copyright_info()
+
+
+func _hide_copyright_info()->void:
+	if _copyright_info_showing:
+		_copyright_info_animator.play("hide")
+		_copyright_info_showing = false
+		_copyright_info_button.show()
+
 
 func get_last(string:String)->String:
 	var last_char := ""
@@ -384,3 +397,14 @@ func get_last(string:String)->String:
 
 func _on_ParticleLocationVarianceTimer_timeout():
 	_snow.position.x = rand_range(0, _screen_size.x)
+
+
+func _on_FrostgraveLinkButton_pressed()->void:
+	OS.shell_open("https://ospreypublishing.com/frostgrave")
+
+
+func _on_CopyrightInfoButton_pressed()->void:
+	if not _copyright_info_showing:
+		_copyright_info_animator.play("show")
+		_copyright_info_showing = true
+		_copyright_info_button.hide()

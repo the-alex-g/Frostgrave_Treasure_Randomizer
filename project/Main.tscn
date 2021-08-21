@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Font.tres" type="DynamicFont" id=2]
@@ -6,14 +6,77 @@
 [ext_resource path="res://Background.png" type="Texture" id=4]
 [ext_resource path="res://TreasurePressed.wav" type="AudioStream" id=5]
 [ext_resource path="res://EncounterPressed.wav" type="AudioStream" id=6]
+[ext_resource path="res://SmallFont.tres" type="DynamicFont" id=7]
+[ext_resource path="res://theme.tres" type="Theme" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 20
 font_data = ExtResource( 3 )
 
+[sub_resource type="DynamicFont" id=6]
+size = 40
+outline_size = 1
+font_data = ExtResource( 3 )
+
 [sub_resource type="DynamicFont" id=2]
 size = 20
 font_data = ExtResource( 3 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "hide"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CopyrightInfo:margin_top")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -100.0, 100.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CopyrightInfo:margin_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -10.0, 190.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "show"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CopyrightInfo:margin_top")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 100.0, -100.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CopyrightInfo:margin_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 190.0, -10.0 ]
+}
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -22,6 +85,7 @@ margin_left = -0.667419
 margin_top = -1.33484
 margin_right = -0.667419
 margin_bottom = -1.33484
+theme = ExtResource( 8 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -89,8 +153,8 @@ __meta__ = {
 }
 
 [node name="Monster" type="Button" parent="Buttons"]
-margin_right = 268.0
-margin_bottom = 45.0
+margin_right = 276.0
+margin_bottom = 49.0
 custom_fonts/font = ExtResource( 2 )
 text = "Random Encounter"
 __meta__ = {
@@ -98,9 +162,9 @@ __meta__ = {
 }
 
 [node name="Treasure" type="Button" parent="Buttons"]
-margin_top = 49.0
-margin_right = 268.0
-margin_bottom = 94.0
+margin_top = 53.0
+margin_right = 276.0
+margin_bottom = 102.0
 custom_fonts/font = ExtResource( 2 )
 text = "Random Treasure"
 __meta__ = {
@@ -110,13 +174,12 @@ __meta__ = {
 [node name="Elabel" type="Label" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -113.5
-margin_top = 20.0
-margin_right = 113.5
-margin_bottom = 39.0
-custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
-text = "Encounter Table"
+margin_left = -204.5
+margin_right = 204.5
+margin_bottom = 52.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0.00392157, 0.317647, 0.427451, 1 )
+text = "Frostgrave Randomizer"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -124,10 +187,10 @@ __meta__ = {
 [node name="Expansions" type="ItemList" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -159.5
+margin_left = -159.0
 margin_top = 75.0
-margin_right = 159.5
-margin_bottom = 220.0
+margin_right = 160.0
+margin_bottom = 214.0
 custom_fonts/font = ExtResource( 2 )
 items = [ "Base Game", null, false, "Thaw of the Lich Lord", null, false, "Alex's Compilation", null, false ]
 __meta__ = {
@@ -306,7 +369,75 @@ stream = ExtResource( 6 )
 
 [node name="Treasure" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
+
+[node name="CopyrightInfoButton" type="Button" parent="."]
+visible = false
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -36.0
+margin_right = 114.0
+margin_bottom = -10.0
+custom_fonts/font = ExtResource( 7 )
+text = "Copyright Info"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CopyrightInfo" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -200.0
+margin_top = -100.0
+margin_right = 200.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CopyrightInfo"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_right = 20.0
+margin_bottom = 14.0
+grow_horizontal = 2
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Copyright is owned by Joseph A. McCullough,
+ the author of Frostgrave. Frostgrave is published by
+Osprey Games. A link is provided below."
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OspreyLinkButton" type="LinkButton" parent="CopyrightInfo"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -97.0
+margin_top = -25.0
+margin_right = 97.0
+margin_bottom = -5.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0.266667, 1, 1 )
+text = "Osprey Games Frostgrave site"
+underline = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CopyrightInfoAnimator" type="AnimationPlayer" parent="."]
+anims/hide = SubResource( 4 )
+anims/show = SubResource( 5 )
+
 [connection signal="timeout" from="Background/ParticleLocationVarianceTimer" to="." method="_on_ParticleLocationVarianceTimer_timeout"]
 [connection signal="pressed" from="Buttons/Monster" to="." method="_on_Monster_pressed"]
 [connection signal="pressed" from="Buttons/Treasure" to="." method="_on_TreasureButton_pressed"]
 [connection signal="item_selected" from="Expansions" to="." method="_on_Expansions_item_selected"]
+[connection signal="pressed" from="CopyrightInfoButton" to="." method="_on_CopyrightInfoButton_pressed"]
+[connection signal="pressed" from="CopyrightInfo/OspreyLinkButton" to="." method="_on_FrostgraveLinkButton_pressed"]
