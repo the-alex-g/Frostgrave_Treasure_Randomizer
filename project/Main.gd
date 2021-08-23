@@ -384,7 +384,6 @@ func _hide_copyright_info()->void:
 	if _copyright_info_showing:
 		_copyright_info_animator.play("hide")
 		_copyright_info_showing = false
-		_copyright_info_button.show()
 
 
 func get_last(string:String)->String:
@@ -400,11 +399,10 @@ func _on_ParticleLocationVarianceTimer_timeout():
 
 
 func _on_FrostgraveLinkButton_pressed()->void:
-	OS.shell_open("https://ospreypublishing.com/frostgrave")
+	var _ignore = OS.shell_open("https://ospreypublishing.com/frostgrave")
 
 
 func _on_CopyrightInfoButton_pressed()->void:
 	if not _copyright_info_showing:
 		_copyright_info_animator.play("show")
 		_copyright_info_showing = true
-		_copyright_info_button.hide()

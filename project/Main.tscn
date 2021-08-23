@@ -13,12 +13,12 @@
 size = 20
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=2]
 size = 40
 outline_size = 1
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=3]
 size = 20
 font_data = ExtResource( 3 )
 
@@ -35,7 +35,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ -100.0, 100.0 ]
+"values": [ -60.0, 100.0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("CopyrightInfo:margin_bottom")
@@ -47,12 +47,25 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ -10.0, 190.0 ]
+"values": [ -10.0, 150.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CopyrightInfoButton:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=5]
 resource_name = "show"
-length = 0.5
+length = 0.25
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("CopyrightInfo:margin_top")
 tracks/0/interp = 1
@@ -60,10 +73,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
+"times": PoolRealArray( 0, 0.25 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 100.0, -100.0 ]
+"values": [ 50.0, -60.0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("CopyrightInfo:margin_bottom")
@@ -72,10 +85,22 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.5 ),
+"times": PoolRealArray( 0, 0.25 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 190.0, -10.0 ]
+"values": [ 100.0, -10.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CopyrightInfoButton:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
 [node name="Main" type="Control"]
@@ -153,7 +178,7 @@ __meta__ = {
 }
 
 [node name="Monster" type="Button" parent="Buttons"]
-margin_right = 276.0
+margin_right = 268.0
 margin_bottom = 49.0
 custom_fonts/font = ExtResource( 2 )
 text = "Random Encounter"
@@ -163,7 +188,7 @@ __meta__ = {
 
 [node name="Treasure" type="Button" parent="Buttons"]
 margin_top = 53.0
-margin_right = 276.0
+margin_right = 268.0
 margin_bottom = 102.0
 custom_fonts/font = ExtResource( 2 )
 text = "Random Treasure"
@@ -177,7 +202,7 @@ anchor_right = 0.5
 margin_left = -204.5
 margin_right = 204.5
 margin_bottom = 52.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.317647, 0.427451, 1 )
 text = "Frostgrave Randomizer"
 __meta__ = {
@@ -232,7 +257,7 @@ margin_left = -224.0
 margin_top = 220.0
 margin_right = 225.0
 margin_bottom = 400.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
 align = 1
 autowrap = true
@@ -371,7 +396,7 @@ stream = ExtResource( 6 )
 stream = ExtResource( 5 )
 
 [node name="CopyrightInfoButton" type="Button" parent="."]
-visible = false
+modulate = Color( 1, 1, 1, 0 )
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -389,9 +414,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -200.0
-margin_top = -100.0
-margin_right = 200.0
+margin_left = -140.0
+margin_top = -60.0
+margin_right = 140.0
 margin_bottom = -10.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -400,15 +425,14 @@ __meta__ = {
 [node name="Label" type="Label" parent="CopyrightInfo"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -20.0
-margin_right = 20.0
-margin_bottom = 14.0
+margin_left = -127.0
+margin_right = 127.0
+margin_bottom = 43.0
 grow_horizontal = 2
 custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Copyright is owned by Joseph A. McCullough,
- the author of Frostgrave. Frostgrave is published by
-Osprey Games. A link is provided below."
+text = "Frostgrave is © Joseph A. McCullough
+and published by                                  "
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -419,13 +443,14 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -97.0
-margin_top = -25.0
-margin_right = 97.0
-margin_bottom = -5.0
+margin_left = 4.58942
+margin_top = -26.682
+margin_right = 93.5894
+margin_bottom = -6.68201
 custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0.266667, 1, 1 )
-text = "Osprey Games Frostgrave site"
+custom_colors/font_color_hover = Color( 0, 0.501961, 1, 1 )
+text = "Osprey Games"
 underline = 1
 __meta__ = {
 "_edit_use_anchors_": false
