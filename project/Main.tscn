@@ -432,7 +432,23 @@ grow_horizontal = 2
 custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Frostgrave is © Joseph A. McCullough
-and published by                                  "
+        "
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="CopyrightInfo"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -127.0
+margin_right = 26.0
+margin_bottom = 43.0
+grow_horizontal = 2
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "
+and published by"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -443,10 +459,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = 4.58942
-margin_top = -26.682
-margin_right = 93.5894
-margin_bottom = -6.68201
+margin_left = 4.82538
+margin_top = -26.2101
+margin_right = 93.8254
+margin_bottom = -6.21008
 custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0.266667, 1, 1 )
 custom_colors/font_color_hover = Color( 0, 0.501961, 1, 1 )
