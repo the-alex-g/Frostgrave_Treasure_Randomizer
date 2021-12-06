@@ -156,8 +156,8 @@ margin_left = -225.0
 margin_top = -30.0
 margin_right = 225.0
 margin_bottom = 300.0
-custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = SubResource( 1 )
 align = 1
 autowrap = true
 __meta__ = {
@@ -202,8 +202,8 @@ anchor_right = 0.5
 margin_left = -204.5
 margin_right = 204.5
 margin_bottom = 52.0
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.317647, 0.427451, 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Frostgrave Randomizer"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -240,8 +240,8 @@ margin_left = -224.5
 margin_top = -19.5
 margin_right = 224.5
 margin_bottom = 19.5
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
 align = 1
 valign = 1
 __meta__ = {
@@ -257,8 +257,8 @@ margin_left = -224.0
 margin_top = 220.0
 margin_right = 225.0
 margin_bottom = 400.0
-custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = SubResource( 3 )
 align = 1
 autowrap = true
 __meta__ = {
@@ -274,8 +274,8 @@ margin_left = -225.0
 margin_top = 50.0
 margin_right = 225.0
 margin_bottom = 50.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -298,96 +298,108 @@ __meta__ = {
 [node name="Mheader" type="Label" parent="EncounterItems/GridContainer"]
 margin_right = 29.0
 margin_bottom = 39.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "M"
+align = 1
 
 [node name="Fheader" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 33.0
 margin_right = 52.0
 margin_bottom = 39.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "F"
+align = 1
 
 [node name="Sheader" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 56.0
 margin_right = 71.0
 margin_bottom = 39.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "S"
+align = 1
 
 [node name="Aheader" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 75.0
 margin_right = 95.0
 margin_bottom = 39.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "A"
+align = 1
 
 [node name="Wheader" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 99.0
 margin_right = 127.0
 margin_bottom = 39.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "W"
+align = 1
 
 [node name="Hheader" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 131.0
 margin_right = 157.0
 margin_bottom = 39.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "H"
+align = 1
 
 [node name="M" type="Label" parent="EncounterItems/GridContainer"]
 margin_top = 43.0
 margin_right = 29.0
 margin_bottom = 82.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
+align = 1
 
 [node name="F" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 33.0
 margin_top = 43.0
 margin_right = 52.0
 margin_bottom = 82.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
+align = 1
 
 [node name="S" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 56.0
 margin_top = 43.0
 margin_right = 71.0
 margin_bottom = 82.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
+align = 1
 
 [node name="A" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 75.0
 margin_top = 43.0
 margin_right = 95.0
 margin_bottom = 82.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
+align = 1
 
 [node name="W" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 99.0
 margin_top = 43.0
 margin_right = 127.0
 margin_bottom = 82.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
+align = 1
 
 [node name="H" type="Label" parent="EncounterItems/GridContainer"]
 margin_left = 131.0
 margin_top = 43.0
 margin_right = 157.0
 margin_bottom = 82.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.25098, 1 )
+custom_fonts/font = ExtResource( 2 )
+align = 1
 
 [node name="Encounter" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
@@ -429,8 +441,8 @@ margin_left = -127.0
 margin_right = 127.0
 margin_bottom = 43.0
 grow_horizontal = 2
-custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
 text = "Frostgrave is © Joseph A. McCullough
         "
 align = 1
@@ -445,8 +457,8 @@ margin_left = -127.0
 margin_right = 26.0
 margin_bottom = 43.0
 grow_horizontal = 2
-custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
 text = "
 and published by"
 align = 1
@@ -463,9 +475,9 @@ margin_left = 4.46249
 margin_top = -27.2988
 margin_right = 93.4625
 margin_bottom = -7.29877
-custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0.266667, 1, 1 )
 custom_colors/font_color_hover = Color( 0, 0.501961, 1, 1 )
+custom_fonts/font = ExtResource( 7 )
 text = "Osprey Games"
 underline = 1
 __meta__ = {

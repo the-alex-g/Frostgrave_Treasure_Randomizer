@@ -84,7 +84,7 @@ var _spells := [
 	["Fleet Feet", "Slow", "Crumble", "Fast Act"],
 	["Leap", "Imp", "Plane Walk", "Control Demon"],
 	["Wall", "Call Storm", "Scatter Shot", "Destructive Sphere"],
-	["Push", "Draining Word", "Explosice Rune", "Write Scroll"],
+	["Push", "Draining Word", "Explosive Rune", "Write Scroll"],
 	["Teleport", "Invisibility", "Beauty", "Transpose"],
 	["Strength", "Telekenisis", "Enchant Armor", "Control Construct"],
 	["Awareness", "True Sight", "Mind Lock", "Mind Control"],
@@ -100,7 +100,7 @@ var _spells := [
 	["Combat Awareness", "Wizard Eye", "Suggestion", "Reveal Secret"],
 	["Circle of Protection", "Heal", "Dispel", "Destroy Undead"],
 ]
-var _dark_alchemy_treasure_table := [
+var _dark_alchemy_treasure_table := [ # not actually being used in the program. I kept it here just in case.
 	[{"type":"coins", "qty":15}],
 	[{"type":"coins", "qty":20}],
 	[{"type":"coins", "qty":25}],
@@ -133,7 +133,7 @@ var _lich_lord_treasure := [
 	"Grimoire of Lichdom",
 	"Grimoire of Revenant",
 	"Horn of Hellfire: Once per game, the weilder of this horn may make a +5 magic shooting attack at a target within 24 inches and line-of-sight. cost: 400gc",
-	"Ivory Scroll",
+	"Ivory Scroll", # the rest is filled in by script
 	"Magic Spectacles: The wearer of these spectacles can see invisible things. If the wearer rolls Lost Eye, the spectacles are destroyed. cost: 250gc",
 	"Quiver of the Soul Seeker: This quiver makes any bow or crossbow attacks by its weilder count as magic attacks. cost: 300gc",
 	"Ring of Life: +1 fight and +1 armor versus Undead. When fighting Undead, attacks count as magic attacks. cost: 400gc",
@@ -247,15 +247,13 @@ func _on_TreasureButton_pressed():
 	_treasure.visible = true
 	var you_found := ""
 	var treasure := []
-	if _expansion != Table.LICH:
-		if _expansion == Table.BASE:
-			var treasure_table := _base_game_treasure_table
-			var treasure_index := d(20)
-			treasure = treasure_table[treasure_index]
-		elif _expansion == Table.COMP:
-			var treasure_table := _dark_alchemy_treasure_table
-			var treasure_index := d(20)
-			treasure = treasure_table[treasure_index]
+	var using_lich_table = false
+	if _expansion == Table.COMP:
+		using_lich_table = true if d(20) == 19 else false
+	if _expansion != Table.LICH and not using_lich_table:
+		var treasure_table := _base_game_treasure_table
+		var treasure_index := d(20)
+		treasure = treasure_table[treasure_index]
 		for item in treasure:
 			var value := ""
 			if item["type"] == "coins":
@@ -287,23 +285,25 @@ func _on_TreasureButton_pressed():
 						you_found += splice(weapon)
 					elif item["type"] == "scroll":
 						var spell := _generate_spell()
-						you_found += "SCROLL OF "+spell.to_upper()+" "
+						you_found += "Scroll of "+spell+" "
 					elif item["type"] == "grimoire":
 						var spell := _generate_spell()
-						you_found += "GRIMOIRE OF "+spell.to_upper()+" "
+						you_found += "Grimoire of "+spell+" "
 					you_found += "\n"
-	elif _expansion == Table.LICH:
+	elif _expansion == Table.LICH or using_lich_table:
 		var item:String = _lich_lord_treasure[d(20)]
 		if item != "Ivory Scroll":
 			you_found = item
 		else:
 			you_found = "Ivory Scroll of "+_generate_spell()+": An Ivory Scroll may be used once per game. When used, roll a die. On a 19-20, the scroll is destroyed. sell: 200"
+		if using_lich_table:
+			you_found += "\n\nfrom the Thaw of the Lich Lord expansion"
 	_treasure.text = you_found
 	_hide_copyright_info()
 
 func splice(item:Dictionary)->String:
 	var spliced := ""
-	spliced += item["name"].to_upper()+": "
+	spliced += item["name"]+": "
 	if item["effect"] == "P":
 		spliced += _blank_of_power+", "
 	elif item["effect"] == "S":
