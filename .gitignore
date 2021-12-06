@@ -1,4 +1,6 @@
 build
 .import
+.x86_64
+.exe
 *-
 .directory
